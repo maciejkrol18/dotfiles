@@ -61,6 +61,8 @@ keys = [
     Key([mod],"s", lazy.spawn("flameshot gui"), desc='Spawn a screenshot GUI'),
     Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 10%+"), desc='Increase screen brightness'),
     Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 10%-"), desc='Decrease screen brightness'),
+    Key([mod],"Left",lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"),desc='Decrease volume'),
+    Key([mod],"Right",lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%"),desc='Increase volume'),
     Key([mod], "v", lazy.spawn(clipboard_history), desc="Show clipboard history")
 ]
 
@@ -186,12 +188,16 @@ screens = [
                 widget.Systray(
                     padding=8,
                 ),
+                widget.PulseVolumeExtra(
+                    emoji=True,
+                ),
                 widget.Battery(
                     charge_char='󰂄',
                     discharge_char='󰂌',
                     empty_char='󱉞',
                     full_char='󰁹',
-                    format='{char} {percent:2.0%} {hour:d}:{min:02d}',
+                    format='{char} {percent:2.0%}',
+                    show_short_text=False,
                     **decoration_group
                 ),
                 widget.Spacer(
