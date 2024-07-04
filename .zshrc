@@ -105,8 +105,8 @@ source $ZSH/oh-my-zsh.sh
 #
 
 # MY CUSTOM ALIASES
+alias dotfiles="cd ~/dotfiles"
 alias zshconfig="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias qtileconfig="nvim ~/.config/qtile/config.py"
 alias qtilevalidate="python3 ~/.config/qtile/config.py && qtile cmd-obj -o cmd -f validate_config"
 alias qtilelogs="nvim ~/.local/share/qtile/qtile.log"
