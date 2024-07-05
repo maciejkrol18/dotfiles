@@ -104,11 +104,12 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 
-# MY CUSTOM ALIASES
+# -- My custom aliases --
 alias dotfiles="cd ~/dotfiles"
 alias zshconfig="nvim ~/.zshrc"
 alias qtileconfig="nvim ~/.config/qtile/config.py"
 alias qtilevalidate="python3 ~/.config/qtile/config.py && qtile cmd-obj -o cmd -f validate_config"
+# I'm using qtilevalidate to find any python errors in the config since i've yet to setup LSP in my neovim config
 alias qtilelogs="nvim ~/.local/share/qtile/qtile.log"
 alias alacrittyconfig="nvim ~/.config/alacritty/alacritty.toml"
 
@@ -118,3 +119,26 @@ alias alacrittyconfig="nvim ~/.config/alacritty/alacritty.toml"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# -- Further customization --
+
+# FZF - Setup fzf key bindings and fuzzy completion
+eval "$(fzf --zsh)"
+
+# FZF - Use fd instead of fzf
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+# FZF - Star star completion - files and directories
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+# FZF - Star star completion - directories like with cd
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+# FZF - Git script
+source ~/fzf-git.sh/fzf-git.sh
