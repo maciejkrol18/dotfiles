@@ -138,7 +138,7 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-# THEMES
+# -- Themes --
 
 current_theme = "GREEN"
 
@@ -150,11 +150,13 @@ themes = {
     }
 }
 
+# -- Mouse callback functions --
+
 def network_manager():
-    lazy.spawn("nmtui")
+    qtile.spawn("nmtui")
 
 def system_monitor():
-    lazy.spawn("btop")
+    qtile.spawn("btop")
 
 # DECORATIONS (qtile-extras)
 
@@ -190,6 +192,9 @@ screens = [
                 ),
                 widget.PulseVolumeExtra(
                     emoji=True,
+                    mouse_callbacks={
+                        'Button1': lazy.spawn('pavucontrol')
+                    },
                 ),
                 widget.Battery(
                     charge_char='󰂄',
@@ -208,7 +213,7 @@ screens = [
                     threshold=80, 
                     tag_sensor='CPU',
                     mouse_callbacks={
-                        "Button1": lazy.spawn("btop"),
+                        'Button1': lazy.spawn('btop')
                     },
                     **decoration_group
                 ),
@@ -217,7 +222,7 @@ screens = [
                 ),
                widget.Wlan(
                     format='  {essid}',
-                    mouse_callbacks={'Button1': system_monitor},
+                    mouse_callbacks={'Button1': lazy.spawn('nmtui')},
                     **decoration_group
                 ),
                  widget.Spacer(
