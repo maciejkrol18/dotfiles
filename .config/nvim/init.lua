@@ -518,6 +518,7 @@ require('lazy').setup({
         'tsserver',
         'biome',
         'basedpyright',
+        'pyink',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -566,6 +567,7 @@ require('lazy').setup({
         json = { 'biome' },
         javascript = { 'biome' },
         typescript = { 'biome' },
+        python = { 'pyink' },
       },
     },
   },
