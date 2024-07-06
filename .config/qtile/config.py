@@ -8,10 +8,12 @@ from qtile_extras.widget.decorations import BorderDecoration
 
 mod = "mod4"
 terminal = "alacritty"
-clipboard_history = "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'"
+clipboard_history = (
+    "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}'"
+)
 
 keys = [
-    # Switch between windows		
+    # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -19,14 +21,23 @@ keys = [
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key(
+        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
+    ),
+    Key(
+        [mod, "shift"],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Move window to the right",
+    ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key(
+        [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
+    ),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -50,20 +61,48 @@ keys = [
         lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen on the focused window",
     ),
-    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
+    Key(
+        [mod],
+        "t",
+        lazy.window.toggle_floating(),
+        desc="Toggle floating on the focused window",
+    ),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-
     # CUSTOM
-
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
-    Key([mod],"e", lazy.spawn("nautilus"), desc='Spawn the file manager'),
-    Key([mod],"s", lazy.spawn("flameshot gui"), desc='Spawn a screenshot GUI'),
-    Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 10%+"), desc='Increase screen brightness'),
-    Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 10%-"), desc='Decrease screen brightness'),
-    Key([mod],"Left",lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"),desc='Decrease volume'),
-    Key([mod],"Right",lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%"),desc='Increase volume'),
-    Key([mod], "v", lazy.spawn(clipboard_history), desc="Show clipboard history")
+    Key(
+        [mod],
+        "r",
+        lazy.spawn("rofi -show drun"),
+        desc="Spawn a command using a prompt widget",
+    ),
+    Key([mod], "e", lazy.spawn("nautilus"), desc="Spawn the file manager"),
+    Key([mod], "s", lazy.spawn("flameshot gui"), desc="Spawn a screenshot GUI"),
+    Key(
+        [],
+        "XF86MonBrightnessUp",
+        lazy.spawn("brightnessctl s 10%+"),
+        desc="Increase screen brightness",
+    ),
+    Key(
+        [],
+        "XF86MonBrightnessDown",
+        lazy.spawn("brightnessctl s 10%-"),
+        desc="Decrease screen brightness",
+    ),
+    Key(
+        [mod],
+        "Left",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -10%"),
+        desc="Decrease volume",
+    ),
+    Key(
+        [mod],
+        "Right",
+        lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +10%"),
+        desc="Increase volume",
+    ),
+    Key([mod], "v", lazy.spawn(clipboard_history), desc="Show clipboard history"),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -112,15 +151,13 @@ layouts = [
         # border_focus_stack=["#928374", "#7c6f64"],
         border_normal="#504945",
         border_focus="#928374",
-        border_width=4, 
-        margin=8
+        border_width=4,
+        margin=8,
     ),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    layout.Bsp(
-        margin=8
-    ),
+    layout.Bsp(margin=8),
     # layout.Matrix(),
     # layout.MonadTall(),
     # layout.MonadWide(),
@@ -152,17 +189,22 @@ themes = {
 
 # -- Mouse callback functions --
 
+
 def network_manager():
     qtile.spawn("nmtui")
 
+
 def system_monitor():
     qtile.spawn("btop")
+
 
 # DECORATIONS (qtile-extras)
 
 decoration_group = {
     "decorations": [
-        RectDecoration(colour="#0F5A3F", radius=10, filled=True, padding_y=4, group=False)
+        RectDecoration(
+            colour="#0F5A3F", radius=10, filled=True, padding_y=4, group=False
+        )
     ],
     "padding": 10,
 }
@@ -175,7 +217,7 @@ screens = [
             [
                 widget.CurrentLayout(),
                 widget.GroupBox(
-                    highlight_method='line',
+                    highlight_method="line",
                 ),
                 widget.Prompt(),
                 widget.WindowName(),
@@ -192,47 +234,33 @@ screens = [
                 ),
                 widget.PulseVolumeExtra(
                     emoji=True,
-                    mouse_callbacks={
-                        'Button1': lazy.spawn('pavucontrol')
-                    },
+                    mouse_callbacks={"Button1": lazy.spawn("pavucontrol")},
                 ),
                 widget.Battery(
-                    charge_char='󰂄',
-                    discharge_char='󰂌',
-                    empty_char='󱉞',
-                    full_char='󰁹',
-                    format='{char} {percent:2.0%}',
+                    charge_char="󰂄",
+                    discharge_char="󰂌",
+                    empty_char="󱉞",
+                    full_char="󰁹",
+                    format="{char} {percent:2.0%}",
                     show_short_text=False,
-                    **decoration_group
+                    **decoration_group,
                 ),
-                widget.Spacer(
-                    length=10
+                widget.Spacer(length=10),
+                widget.ThermalSensor(
+                    format="  {temp:.1f}{unit}",
+                    threshold=80,
+                    tag_sensor="CPU",
+                    mouse_callbacks={"Button1": lazy.spawn("btop")},
+                    **decoration_group,
                 ),
-               widget.ThermalSensor(
-                    format='  {temp:.1f}{unit}',
-                    threshold=80, 
-                    tag_sensor='CPU',
-                    mouse_callbacks={
-                        'Button1': lazy.spawn('btop')
-                    },
-                    **decoration_group
+                widget.Spacer(length=10),
+                widget.Wlan(
+                    format="  {essid}",
+                    mouse_callbacks={"Button1": lazy.spawn("nmtui")},
+                    **decoration_group,
                 ),
-                widget.Spacer(
-                    length=10
-                ),
-               widget.Wlan(
-                    format='  {essid}',
-                    mouse_callbacks={'Button1': lazy.spawn('nmtui')},
-                    **decoration_group
-                ),
-                 widget.Spacer(
-                    length=10
-                ),
-               widget.Clock(
-                    format="  %d-%m-%Y %H:%M",
-                    **decoration_group
-                ),
-
+                widget.Spacer(length=10),
+                widget.Clock(format="  %d-%m-%Y %H:%M", **decoration_group),
             ],
             32,
             background=themes[current_theme]["bar_color"],
@@ -248,8 +276,15 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
