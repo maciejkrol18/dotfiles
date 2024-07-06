@@ -142,3 +142,10 @@ _fzf_compgen_dir() {
 
 # FZF - Git script
 source ~/fzf-git.sh/fzf-git.sh
+
+# Eza - better ls
+alias ls="eza --color=always --long --git --all --no-filesize --icons=always --no-time --no-user --no-permissions"
+
+# Zoxide - better cd
+eval "$(zoxide init zsh)"
+alias cd="z"
