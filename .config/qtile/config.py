@@ -215,12 +215,14 @@ screens = [
         wallpaper_mode="fill",
         top=bar.Bar(
             [
-                widget.CurrentLayout(),
+                widget.CurrentLayoutIcon(scale=0.75),
                 widget.GroupBox(
                     highlight_method="line",
                 ),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.WindowName(
+                    parse_text=lambda s: (s[:28] + "...") if len(s) > 30 else s
+                ),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
