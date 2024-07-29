@@ -4,6 +4,10 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Tab sizing
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -152,6 +156,11 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+  },
   { -- Tag autoclosing
     'windwp/nvim-ts-autotag',
     ft = {
@@ -182,10 +191,26 @@ require('lazy').setup({
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
-  {
+  { -- Emmet autocompletion
     'olrtg/nvim-emmet',
     config = function()
       vim.keymap.set({ 'n', 'v' }, '<leader>xe', require('nvim-emmet').wrap_with_abbreviation)
+    end,
+  },
+  { -- Tailwind tooling
+    'luckasRanarison/tailwind-tools.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {}, -- your configuration
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    init = function()
+      require('lualine').setup {
+        options = {
+          theme = 'vscode',
+        },
+      }
     end,
   },
   -- "gc" to comment visual regions/lines
@@ -548,8 +573,8 @@ require('lazy').setup({
         'biome',
         'basedpyright',
         'pyink',
-        'tailwindcss-language-server',
         'emmet-language-server',
+        'tailwindcss-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -715,9 +740,6 @@ require('lazy').setup({
   },
 
   -- { -- You can easily change to a different colorscheme.
-  --   -- Change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is.
-  --   --
   --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
   --   'folke/tokyonight.nvim',
   --   priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -733,18 +755,32 @@ require('lazy').setup({
   -- },
   --
   {
-    'rebelot/kanagawa.nvim',
+    'Mofiqul/vscode.nvim',
     priority = 1000,
     config = function()
-      require('kanagawa').setup {
-        transparent = true,
+      local c = require('vscode.colors').get_colors()
+      require('vscode').setup {
+        transparent = false,
+        italic_comments = true,
+        underline_links = true,
+        disable_nvimtree_bg = false,
+        -- Override colors (see ./lua/vscode/colors.lua)
+        color_overrides = {
+          vscLineNumber = '#FFFFFF',
+        },
+        -- Override highlight groups (see ./lua/vscode/theme.lua)
+        group_overrides = {
+          -- this supports the same val table as vim.api.nvim_set_hl
+          -- use colors from this colorscheme by requiring vscode.colors!
+          Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+        },
       }
     end,
     init = function()
-      vim.cmd.colorscheme 'kanagawa'
+      vim.cmd.colorscheme 'vscode'
     end,
   },
-
+  --
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -789,7 +825,20 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'vim',
+        'vimdoc',
+        'typescript',
+        'javascript',
+        'css',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -861,8 +910,6 @@ require('lazy').setup({
     },
   },
 })
-
-require('ibl').setup()
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

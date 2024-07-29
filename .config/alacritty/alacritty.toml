@@ -4,8 +4,8 @@ normal.family = "CommitMono Nerd Font"
 bold.family = "CommitMono Nerd Font"
 italic.family = "CommitMono Nerd Font"
 bold_italic.family = "CommitMono Nerd Font"
-offset.y = 2
-size = 9
+offset.y = 4
+size = 12
 
 [window]
 
