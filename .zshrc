@@ -108,10 +108,10 @@ source $ZSH/oh-my-zsh.sh
 alias dotfiles="cd ~/dotfiles"
 alias zshconfig="nvim ~/.zshrc"
 alias qtileconfig="nvim ~/.config/qtile/config.py"
-alias qtilevalidate="python3 ~/.config/qtile/config.py && qtile cmd-obj -o cmd -f validate_config"
-# I'm using qtilevalidate to find any python errors in the config since i've yet to setup LSP in my neovim config
 alias qtilelogs="nvim ~/.local/share/qtile/qtile.log"
 alias alacrittyconfig="nvim ~/.config/alacritty/alacritty.toml"
+alias nvimconfig="nvim ~/.config/nvim/init.lua"
+alias picomconfig="nvim ~/.config/picom.conf"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

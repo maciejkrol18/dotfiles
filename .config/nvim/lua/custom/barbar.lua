@@ -1,0 +1,1 @@
+plugins/barbar.lua
