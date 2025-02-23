@@ -1,21 +1,18 @@
-return { -- Useful plugin to show you pending keybinds.
+return {
   'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-  config = function() -- This is the function that runs, AFTER loading
-    require('which-key').setup()
-
-    -- Document existing key chains
-    require('which-key').register {
-      { '', group = '[R]ename' },
-      { '', group = '[S]earch' },
-      { '', group = '[D]ocument' },
-      { '', group = '[W]orkspace' },
-      { '', group = '[T]oggle' },
-      { '', group = '[C]ode' },
-      { '', group = 'Git [H]unk' },
-      { '', desc = '', hidden = true, mode = { 'n', 'n', 'n', 'n', 'n', 'n', 'n' } },
-    }
-    -- visual mode
-    require('which-key').register { '<leader>h', desc = 'Git [H]unk', mode = 'v' }
-  end,
+  event = 'VeryLazy',
+  opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  },
+  keys = {
+    {
+      '<leader>?',
+      function()
+        require('which-key').show { global = false }
+      end,
+      desc = 'Buffer Local Keymaps (which-key)',
+    },
+  },
 }
