@@ -112,6 +112,8 @@ alias qtilelogs="nvim ~/.local/share/qtile/qtile.log"
 alias alacrittyconfig="nvim ~/.config/alacritty/alacritty.toml"
 alias nvimconfig="nvim ~/.config/nvim/init.lua"
 alias picomconfig="nvim ~/.config/picom.conf"
+alias batteryinfo="upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+alias obsidian="~/Downloads/Obsidian-1.6.7.AppImage"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -144,8 +146,16 @@ _fzf_compgen_dir() {
 source ~/fzf-git.sh/fzf-git.sh
 
 # Eza - better ls
-alias ls="eza --color=always --long --git --all --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias ls="eza --color=always --long --git --all --icons=always --no-user"
 
 # Zoxide - better cd
 eval "$(zoxide init zsh)"
 alias cd="z"
+
+# pnpm
+export PNPM_HOME="/home/fancy/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

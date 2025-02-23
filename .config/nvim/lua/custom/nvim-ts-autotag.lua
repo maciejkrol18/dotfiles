@@ -1,1 +1,0 @@
-plugins/nvim-ts-autotag.lua
